@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="index-2.html" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <a href="blog.html" class="stext-109 cl8 hov-cl1 trans-04">
+            Blog
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <span class="stext-109 cl4">
+        8 Inspiring Ways to Wear Dresses in the Winter
+        </span>
+        </div>
+</div>
+
+<section class="bg0 p-t-52 p-b-20">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-lg-9 p-b-80">
+                <div class="p-r-45 p-r-0-lg">
+
+                    <div class="wrap-pic-w how-pos5-parent">
+                        <img src="{{ products.image.url }}" class='nimass' alt="IMG-BLOG">
+                        <div class="flex-col-c-m size-123 bg9 how-pos5">
+                        <span class="ltext-107 cl2 txt-center">
+                            {{ products.created_at|date:'d' }}
+                        </span>
+                        <span class="stext-109 cl3 txt-center">
+                            {{ products.created_at|date:'M Y' }}
+                        </span>
+                        </div>
+                    </div>
+                    <div class="p-t-32">
+                        <span class="flex-w flex-m stext-111 cl2 p-b-19">
+                            <span>
+                                <span class="cl4">By</span> {{ request.user }}
+                                <span class="cl12 m-l-4 m-r-6">|</span>
+                            </span>
+                        <span>
+                            {{ products.created_at }}
+                        <span class="cl12 m-l-4 m-r-6">|</span>
+                        </span>
+                        <span>
+                            {% for ta in products.tag.all %}{{ ta }},{% endfor %}
+                        <span class="cl12 m-l-4 m-r-6">|</span>
+                        </span>
+                        <span>
+                            {{comments.all.count}} comments
+                        </span>
+                        </span>
+                        <h4 class="ltext-109 cl2 p-b-28">
+                            {{ products.name }}
+                        </h4>
+                        <p class="stext-117 cl6 p-b-26">
+                            {{ products.story }}
+                        </p>
+                    </div>
+                    <div class="flex-w flex-t p-t-16">
+                        <span class="size-216 stext-116 cl8 p-t-4">
+                        Tags
+                        </span>
+                        <div class="flex-w size-217">
+                            {% for ta in products.tag.all %}
+                            <a href="/blog/?tag={{ tag }}"
+                               class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+                               {{ ta }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="p-t-40">
+                        <h5 class="mtext-113 cl2 p-b-12">
+                            Leave a Comment
+                        </h5>
+                        {% for commen in  comments %}
+                        <p class="stext-107 cl6 p-b-40">
+                            {{ commen.comment }}
+                        </p>
+                        {% endfor %}
+                        <form method = 'post'>
+                            {% csrf_token %}
+                            <label for="message">Comment</label>
+                            <div class="bor19 m-b-20">
+                                {% comment %} <textarea class="stext-111 cl2 plh3 size-124 p-lr-18 p-tb-15" name="cmt"
+                                          placeholder="Comment..."></textarea> {% endcomment %}
+                                {{ form.comment }}
+                            </div>
+                            <label  for="name">Name *</label>
+                            <div class="bor19 size-218 m-b-20">
+                                {% comment %} <input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="name"
+                                       placeholder="Name *"> {% endcomment %}
+                                {{ form.name }}
+                            </div>
+                            <label for="email">Email *</label>
+                            <div class="bor19 size-218 m-b-20">
+                                {% comment %} <input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="email"
+                                       placeholder="Email *"> {% endcomment %}
+                                {{form.email  }}
+                            </div>
+                            <label for="website">Website *</label>
+                            <div class="bor19 size-218 m-b-30">
+                                {% comment %} <input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="web"
+                                       placeholder="Website"> {% endcomment %}
+                                {{ form.website }}
+                            </div>
+                            <button class="flex-c-m stext-101 cl0 size-125 bg3 bor2 hov-btn3 p-lr-15 trans-04">
+                                Post Comment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 p-b-80">
+                <div class="side-menu">
+                    <form method='get' action='/blog/'>
+                    <div class="bor17 of-hidden pos-relative">
+                        <input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" type="search" name="search"
+                               placeholder="Search">
+                        <button class="flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04">
+                            <i class="zmdi zmdi-search"></i>
+                        </button>
+                    </div>
+                   </form
+                    <div class="p-t-55">
+                        <h4 class="mtext-112 cl2 p-b-33">
+                            Categories
+                        </h4>
+                        <ul>
+                            {% for category in categories %}
+                            <li class="bor18">
+                                <a href="/blog/?cat={{ cat }}" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
+                                    {{ category }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="p-t-65">
+                        <h4 class="mtext-112 cl2 p-b-33">
+                            Featured Products
+                        </h4>
+                        <ul>
+                            {% for blog in blogs %}
+                            <li class="flex-w flex-t p-b-30">
+                                <a href="/product-detail/{{ blog.id }}/" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+                                    <img src="{{ blog.productimage_set.first.image.url }}" class='nimasi' alt="PRODUCT">
+                                </a>
+                                <div class="size-215 flex-col-t p-t-8">
+                                    <a href="/product-detail/{{ blog.id }}/" class="stext-116 cl8 hov-cl1 trans-04">
+                                        {{ blog.name }}
+                                    </a>
+                                    <span class="stext-116 cl6 p-t-20">
+                                    ${{ blog.price }}
+                                    </span>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="p-t-55">
+                        <h4 class="mtext-112 cl2 p-b-20">
+                            Archive
+                        </h4>
+                        <ul>
+                            <li class="p-b-7">
+                                {% for blog in blogs %}
+                                <a href="/product-detail/{{ blog.id }}/" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+                                    <span>
+                                    {{blog.created_at|date:'M, Y'}}
+                                    </span>
+                                </a>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="p-t-50">
+                        <h4 class="mtext-112 cl2 p-b-27">
+                            Tags
+                        </h4>
+                        <div class="flex-w m-r--5">
+                            {% for tag in tags %}
+                            <a href="/blog/?tag={{ tag }}"
+                               class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+                                {{ tag }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="btn-back-to-top" id="myBtn">
+<span class="symbol-btn-back-to-top">
+<i class="zmdi zmdi-chevron-up"></i>
+</span>
+</div>
+
+{% endblock content %}
